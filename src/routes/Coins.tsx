@@ -25,14 +25,16 @@ const Coin = styled.li`
 
     a{
         transition: color 0.2s ease-in;
-        display: block;
+        display: flex;
         padding: 20px;
+        align-items: center;
+        width: -webkit-fill-available;
     }
 
     &:hover {
         a {
             color: ${(props) => props.theme.accentColor};
-            //font-size: large;
+            font-size: large;
         }
     }
 `;
@@ -47,7 +49,12 @@ const Loader = styled.h3`
     text-align: center;
     margin-top: 30px;
     color: ${(props) => props.theme.textColor}
+`;
 
+const Img = styled.img`
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
 `;
 
 interface CoinInterface {
@@ -91,7 +98,7 @@ function Coins() {
             ) : (
             <CoinsList>
                 {coins.map((coin) => <Coin key={coin.id}>
-                    <Link to={`/${coin.id}`}><img src={`https://cryptocurrencyliveprices.com/img/${coin.symbol}.png`}></img>{coin.name} &rarr;
+                    <Link to={`/${coin.id}`}><Img src={`https://static.coinpaprika.com/coin/${coin.id}/logo.png`}></Img>{coin.name} &rarr;
                     </Link>
                     </Coin>)}
             </CoinsList>
