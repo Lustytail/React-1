@@ -98,7 +98,8 @@ function Coins() {
             ) : (
             <CoinsList>
                 {coins.map((coin) => <Coin key={coin.id}>
-                    <Link to={`/${coin.id}`}><Img src={`https://static.coinpaprika.com/coin/${coin.id}/logo.png`}></Img>{coin.name} &rarr;
+                    <Link to={`/${coin.id}`} state={{name: coin.name}}>
+                        <Img src={`https://static.coinpaprika.com/coin/${coin.id}/logo.png`}></Img>{coin.name} &rarr;
                     </Link>
                     </Coin>)}
             </CoinsList>
