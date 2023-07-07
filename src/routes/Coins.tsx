@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchCoins } from "../api";
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
+
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -20,7 +22,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-    background-color: whiteSmoke;
+    background-color: ${props => props.theme.blkColor};
     color: ${props => props.theme.bgColor};
     margin-bottom: 10px;
     border-radius: 15px;
@@ -92,7 +94,9 @@ function Coins() {
     const {isLoading, data} = useQuery<ICoin[]>(["allCoins"], fetchCoins);
     return (
         <Container>
-
+            <Helmet>
+                <title>코인</title>
+            </Helmet>
             <Header>
                 <Title>코인</Title>
             </Header>

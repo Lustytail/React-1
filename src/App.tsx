@@ -1,7 +1,10 @@
-import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import React, { useState } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './theme';
+import { Link } from 'react-router-dom';
 
 const Globalstyle = createGlobalStyle`
 
@@ -72,12 +75,43 @@ a {
 }
 `;
 
+const TopDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+
+`;
+
+const Btn = styled.button`
+    text-align: center;
+    font-size: 20px;
+    font-weight: 200;
+    background-color: rgba(0,0,0,0.5);
+    padding: 5px 20px;
+    border-radius: 20px;
+    color: ;
+    cursor: pointer;
+    a {
+        display: block;
+    }
+`;
+
 function App() {
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const onClick = () => setIsDarkTheme((prev) => !prev);
+
   return (
     <>
-      <Globalstyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />s
+      <ThemeProvider theme={ isDarkTheme ? darkTheme : lightTheme}>
+        <Globalstyle />
+
+        <TopDiv>
+          <Btn onClick={onClick}>{isDarkTheme ? "🌙" : "🌞"}</Btn>
+        </TopDiv>
+        
+        <Router/>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }
