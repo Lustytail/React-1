@@ -7,6 +7,8 @@ import Chart from "./Chart";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
+import { isDarkAtom } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 
 const Container = styled.div`
@@ -37,7 +39,7 @@ const Btn = styled.span`
     background-color: rgba(0,0,0,0.5);
     padding: 9px 12px;
     border-radius: 20px;
-    color: ;
+    cursor: pointer;
     a {
         display: block;
     }
@@ -164,7 +166,10 @@ interface IPriceData {
     }
 }
 
-function Coin() {
+interface ICoinProps {
+}
+
+function Coin({}: ICoinProps) {
     const {coinId} = useParams();
     const {state} = useLocation() as LocationState;
     const priceMatch = useMatch("/:coinId/price");
@@ -193,6 +198,8 @@ function Coin() {
         ["tickers", coinId],
          () => fetchCoinTickers(`${coinId}`));
     const loading = infoLoading || tickersLoading;
+
+    const isDark = useRecoilValue(isDarkAtom);
 
     return (
         <Container>

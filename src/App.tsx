@@ -5,6 +5,8 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme';
 import { Link } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isDarkAtom } from './atoms';
 
 const Globalstyle = createGlobalStyle`
 
@@ -97,19 +99,20 @@ const Btn = styled.button`
 `;
 
 function App() {
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
-  const onClick = () => setIsDarkTheme((prev) => !prev);
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((current) => !current);
 
   return (
     <>
-      <ThemeProvider theme={ isDarkTheme ? darkTheme : lightTheme}>
+      <ThemeProvider theme={ isDark ? darkTheme : lightTheme}>
         <Globalstyle />
 
         <TopDiv>
-          <Btn onClick={onClick}>{isDarkTheme ? "🌙" : "🌞"}</Btn>
+          <Btn onClick={toggleDarkAtom}>{isDark ? "🌙" : "🌞"}</Btn>
         </TopDiv>
         
-        <Router/>
+        <Router />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>
